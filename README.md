@@ -4,7 +4,7 @@
 
 **Experimental Luraph deobfuscator and Lua/Luau VM recovery toolkit.**
 
-NARSIL supports Luraph deobfuscation and reverse engineering through static
+NARSIL supports Luraph deobfuscation (deobf) and reverse engineering through static
 inspection, planning the capture of unpacked VM data, and recovering Luau from
 a compatible dump. It includes a reproducible devirtualization demo and a
 detailed guide to the method.
