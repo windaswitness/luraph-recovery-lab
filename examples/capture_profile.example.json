@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "name": "authored-toy-prototype-only",
+  "input_sha256": "f9feb5096b41ae1c210243a9396a3223ace6b0c93d0ac0947152e4ae338383ca",
+  "intercept": {
+    "marker": "return create(decode())",
+    "replacement": "return decode()",
+    "returns": "prototype"
+  },
+  "strip_tail": {
+    "suffix": "()\n"
+  },
+  "guard": {
+    "instruction_limit": 10000,
+    "time_limit_seconds": 2,
+    "hook_name": "__toy_capture_guard",
+    "yield_every": 100
+  },
+  "include_graph_serializer": true
+}

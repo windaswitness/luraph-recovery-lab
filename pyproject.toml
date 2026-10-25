@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "luraph-recovery-lab"
+version = "0.1.0"
+description = "Experimental Lua VM inspection, capture planning, and reconstruction tools"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "Luraph Recovery Lab contributors"}]
+keywords = ["lua", "luau", "devirtualization", "reverse-engineering", "luraph"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Disassemblers",
+]
+
+[project.scripts]
+luraph-lab = "luraph_lab.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["luraph_lab*"]
+
+[tool.setuptools.package-data]
+luraph_lab = ["resources/*.luau", "resources/*.json"]
