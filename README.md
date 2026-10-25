@@ -1,13 +1,18 @@
 # NARSIL
 
-**An experimental Luraph deobfuscator and Lua/Luau VM recovery toolkit. Recover the logic. Reforge the code. и темы luraph, luraph-deobfuscator, luraph-deobf, deobfuscation, deobfuscator, lua, luau, reverse-engineering, devirtualization**
+*Recover the logic. Reforge the code.*
 
-A toolkit for analyzing virtualized Lua/Luau: static inspection, planning the
-capture of unpacked VM data, and recovering Luau from a compatible dump.
+**Experimental Luraph deobfuscator and Lua/Luau VM recovery toolkit.**
+
+NARSIL supports Luraph deobfuscation and reverse engineering through static
+inspection, planning the capture of unpacked VM data, and recovering Luau from
+a compatible dump. It includes a reproducible devirtualization demo and a
+detailed guide to the method.
 Requires Python 3.10+ and has no third-party runtime dependencies.
 
-This project grew out of hands-on script recovery. It includes reusable tools
-and original educational examples. Game source code, game assets, and private
+Previously published as **Luraph Recovery Lab**, this project grew out of
+hands-on script recovery. It includes reusable tools and original educational
+examples. Game source code, game assets, and private
 dumps are not included in the repository.
 
 **Status: experimental.** The `column-vm-v1` adapter supports one observed VM
@@ -20,8 +25,8 @@ does not guarantee compatibility. This is not a universal decompiler for all
 From the root of the downloaded repository:
 
 ```sh
-python -m luraph_lab profiles
-python -m luraph_lab demo --out work/demo
+python -m narsil profiles
+python -m narsil demo --out work/demo
 python -m unittest discover -s tests -v
 ```
 
@@ -33,7 +38,7 @@ Installation is optional. To add a standalone command to your Python environment
 
 ```sh
 python -m pip install .
-luraph-lab --help
+narsil --help
 ```
 
 Building the package uses setuptools; running it directly with `python -m`
@@ -44,7 +49,7 @@ does not require setuptools to be installed.
 ### Inspect strings and file structure
 
 ```sh
-python -m luraph_lab inspect private/input.lua --out work/inspection
+python -m narsil inspect private/input.lua --out work/inspection
 ```
 
 This command identifies literals, decodes supported escape sequences, and writes
@@ -55,7 +60,7 @@ virtual machine.
 ### Prepare a loader capture
 
 ```sh
-python -m luraph_lab capture-plan private/input.lua --profile private/capture-profile.json --out work/capture-plan
+python -m narsil capture-plan private/input.lua --profile private/capture-profile.json --out work/capture-plan
 ```
 
 The profile is tied to the exact input file's SHA-256 and specifies reviewed
@@ -72,7 +77,7 @@ before it can be used with another script.
 ### Recover code from a compatible dump
 
 ```sh
-python -m luraph_lab recover private/capture.json --profile column-vm-v1 --out work/recovered
+python -m narsil recover private/capture.json --profile column-vm-v1 --out work/recovered
 ```
 
 The input is a serialized graph of unpacked tables, not the original obfuscated

@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class CommandLineTests(unittest.TestCase):
     def invoke(self, *arguments):
         return subprocess.run(
-            [sys.executable, "-m", "luraph_lab", *map(str, arguments)],
+            [sys.executable, "-m", "narsil", *map(str, arguments)],
             cwd=ROOT, capture_output=True, text=True,
             env={**os.environ, "PYTHONIOENCODING": "utf-8"},
             timeout=30,

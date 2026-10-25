@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from luraph_lab.capture import CapturePlanError, plan_capture
+from narsil.capture import CapturePlanError, plan_capture
 
 
 TOY = '''return (function()

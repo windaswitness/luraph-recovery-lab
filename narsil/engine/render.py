@@ -3,7 +3,7 @@ from collections import Counter, defaultdict
 from types import SimpleNamespace
 import math
 import re
-from luraph_lab.lua_lex import quote
+from narsil.lua_lex import quote
 from .lift import Op, O, R, U, K, G, ix, call
 
 def render(context, functions, parents, structured):

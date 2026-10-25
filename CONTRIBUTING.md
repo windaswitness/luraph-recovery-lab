@@ -1,4 +1,4 @@
-# Contributing
+# Contributing to NARSIL
 
 Start with `python -m unittest discover -s tests -v` and the synthetic demo.
 The toolkit has no runtime dependencies outside Python's standard library.

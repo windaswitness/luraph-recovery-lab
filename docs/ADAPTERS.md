@@ -1,17 +1,17 @@
 # Adapters, Capture, and Data Formats
 
-Luraph Recovery Lab has two different kinds of profiles. A **capture profile** is a JSON file containing reviewed changes for one specific loader. A **recovery profile** is a Python adapter that understands a VM's data layout and opcode semantics. A match for one profile does not establish compatibility with the other.
+NARSIL has two different kinds of profiles. A **capture profile** is a JSON file containing reviewed changes for one specific loader. A **recovery profile** is a Python adapter that understands a VM's data layout and opcode semantics. A match for one profile does not establish compatibility with the other.
 
 Run all commands below from the repository root with Python 3.10+. The `--out` directory must be new or empty. These commands do not execute Lua or connect to Studio.
 
 ## Commands and Their Scope
 
 ```sh
-python -m luraph_lab profiles
-python -m luraph_lab inspect private/input.lua --out work/inspection
-python -m luraph_lab capture-plan private/input.lua --profile private/capture-profile.json --out work/capture-plan
-python -m luraph_lab recover private/capture.json --profile column-vm-v1 --out work/recovered
-python -m luraph_lab demo --out work/demo
+python -m narsil profiles
+python -m narsil inspect private/input.lua --out work/inspection
+python -m narsil capture-plan private/input.lua --profile private/capture-profile.json --out work/capture-plan
+python -m narsil recover private/capture.json --profile column-vm-v1 --out work/recovered
+python -m narsil demo --out work/demo
 ```
 
 - `profiles` lists the built-in adapters and their supported scope.
@@ -20,14 +20,14 @@ python -m luraph_lab demo --out work/demo
 - `recover` accepts an already captured JSON table graph. It does not accept an obfuscated `.lua` file directly.
 - `demo` runs the same recovery pipeline on the original synthetic data included in the package.
 
-For full usage information, run `python -m luraph_lab --help` or `python -m luraph_lab recover --help`. Invalid input or an unsupported construct causes the command to exit with a nonzero status.
+For full usage information, run `python -m narsil --help` or `python -m narsil recover --help`. Invalid input or an unsupported construct causes the command to exit with a nonzero status.
 
 ## Capture Profiles: Exact Source, Exact Replacement
 
 The working tutorial pair is [examples/toy_loader.lua](../examples/toy_loader.lua) and [examples/capture_profile.example.json](../examples/capture_profile.example.json). This loader was written specifically for the example; it is not someone else's obfuscated script.
 
 ```sh
-python -m luraph_lab capture-plan examples/toy_loader.lua --profile examples/capture_profile.example.json --out work/toy-capture-plan
+python -m narsil capture-plan examples/toy_loader.lua --profile examples/capture_profile.example.json --out work/toy-capture-plan
 ```
 
 JSON profile fields:
@@ -95,7 +95,7 @@ The current adapter accepts numeric keys and byte-string keys. It rejects Boolea
 
 ### Lazy Constants
 
-A constant column may have an `__index` metamethod that computes a value on its first read. Raw table traversal cannot see entries that have not yet been materialized. The [graph_serializer.luau](../luraph_lab/resources/graph_serializer.luau) helper supports explicit ranges:
+A constant column may have an `__index` metamethod that computes a value on its first read. Raw table traversal cannot see entries that have not yet been materialized. The [graph_serializer.luau](../narsil/resources/graph_serializer.luau) helper supports explicit ranges:
 
 ```lua
 local graph = serializeGraph(prototype, {
@@ -115,7 +115,7 @@ The tutorial's `toy_loader.lua` demonstrates loader interception and export. It 
 
 This is an experimental profile for **one observed column-based VM**. It does not identify the Luraph version and does not promise compatibility with every build of 13.8.1, 14.3, or any other version.
 
-The current implementation is in [column_vm_v1.py](../luraph_lab/adapters/column_vm_v1.py). It expects these prototype fields:
+The current implementation is in [column_vm_v1.py](../narsil/adapters/column_vm_v1.py). It expects these prototype fields:
 
 - Field `9` — the opcode column.
 - Fields `2`, `8`, and `11` — operand columns whose meanings depend on the opcode.
@@ -153,7 +153,7 @@ Implement a new layout as a separate profile so the existing one remains a repro
 1. Document the prototype schema and establish the meaning of each field from the code that reads it.
 2. Record the semantics of every handler in use: values, jumps, calls, captures, and side effects.
 3. Add original, small fixtures for arithmetic, branches, loops, closures, varargs, and multiple results.
-4. Implement parsing and normalization in `luraph_lab/adapters/` without including the original loader, encrypted payload, or game-specific strings.
+4. Implement parsing and normalization in `narsil/adapters/` without including the original loader, encrypted payload, or game-specific strings.
 5. Add profile selection to the pipeline and CLI; adding a Python file alone does not register it automatically.
 6. Compare the IR with the structured output, then run differential tests in an appropriate Lua/Luau runtime.
 7. Document refusal cases and inputs that have not yet been tested.

@@ -4,8 +4,8 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from luraph_lab.inspection import inspect_file
-from luraph_lab.lua_lex import LuaLexError, decode, quote, scan
+from narsil.inspection import inspect_file
+from narsil.lua_lex import LuaLexError, decode, quote, scan
 
 
 class LiteralTests(unittest.TestCase):

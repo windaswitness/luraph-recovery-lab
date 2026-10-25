@@ -3,14 +3,14 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "luraph-recovery-lab"
-version = "0.1.0"
-description = "Experimental Lua VM inspection, capture planning, and reconstruction tools"
+name = "narsil"
+version = "0.2.0"
+description = "NARSIL: experimental Luraph recovery tools for Lua/Luau VM inspection, capture planning, and reconstruction"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
-authors = [{name = "Luraph Recovery Lab contributors"}]
-keywords = ["lua", "luau", "devirtualization", "reverse-engineering", "luraph"]
+authors = [{name = "NARSIL contributors"}]
+keywords = ["luraph", "deobfuscation", "deobfuscator", "deobf", "lua", "luau", "devirtualization", "reverse-engineering"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3",
@@ -18,10 +18,15 @@ classifiers = [
 ]
 
 [project.scripts]
-luraph-lab = "luraph_lab.cli:main"
+narsil = "narsil.cli:main"
+
+[project.urls]
+Repository = "https://github.com/windaswitness/narsil"
+Documentation = "https://github.com/windaswitness/narsil/tree/main/docs"
+Issues = "https://github.com/windaswitness/narsil/issues"
 
 [tool.setuptools.packages.find]
-include = ["luraph_lab*"]
+include = ["narsil*"]
 
 [tool.setuptools.package-data]
-luraph_lab = ["resources/*.luau", "resources/*.json"]
+narsil = ["resources/*.luau", "resources/*.json"]

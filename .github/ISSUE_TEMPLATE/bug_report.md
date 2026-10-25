@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: A reproducible inspection, capture-plan, or reconstruction failure
+about: A reproducible NARSIL inspection, capture-plan, or reconstruction failure
 ---
 
 **Command and adapter**

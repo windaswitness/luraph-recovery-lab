@@ -7,7 +7,7 @@ import zipfile
 
 ROOT_FILES = ("README.md", "CONTRIBUTING.md", "LICENSE", "pyproject.toml",
               "MANIFEST.in", ".gitignore", ".gitattributes")
-SOURCE_DIRECTORIES = ("luraph_lab", "tests", "examples", "docs", "tools", ".github")
+SOURCE_DIRECTORIES = ("narsil", "tests", "examples", "docs", "tools", ".github")
 EXCLUDE = {"__pycache__", ".git", ".test-tmp", ".pytest_cache", "private", "captures", "work"}
 
 
@@ -37,7 +37,7 @@ def main():
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, "x", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for path in files:
-            archive.write(path, Path("luraph-recovery-lab") / path.relative_to(root))
+            archive.write(path, Path("narsil") / path.relative_to(root))
     print(f"Wrote {len(files)} public source files to {output}")
 
 

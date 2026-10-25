@@ -1,6 +1,6 @@
 # Recovering a Program from a Virtual Machine
 
-Luraph Recovery Lab helps analyze Lua/Luau programs that an obfuscator has transformed into data and an interpreter. The goal is to recover an understandable program whose behavior can be tested. Recovering the original file byte for byte is usually impossible: local variable names, comments, formatting, and some of the original structure have already been lost.
+NARSIL helps analyze Lua/Luau programs that an obfuscator has transformed into data and an interpreter. The goal is to recover an understandable program whose behavior can be tested. Recovering the original file byte for byte is usually impossible: local variable names, comments, formatting, and some of the original structure have already been lost.
 
 This document describes the full investigation process. The project's commands automate only the stages identified as such. A guide to recovering readable Luau does not mean that `recover` automatically produces a ready-to-use game script. The actual inputs, outputs, and limitations are documented in [ADAPTERS.md](ADAPTERS.md).
 
@@ -241,6 +241,6 @@ Similar code and a matching version number justify trying an adapter; they do no
 
 ## Related Work
 
-The README for [PhoenixZeng/LuraphDeobfuscator](https://github.com/PhoenixZeng/LuraphDeobfuscator) states that it was tested on Luraph v11.5–v11.8.1 and describes generating `.luac` followed by decompilation with `unluac`. That is a separate tool with its own stated capabilities; those claims do not carry over to Luraph Recovery Lab. No code from that repository is included in this project.
+The README for [PhoenixZeng/LuraphDeobfuscator](https://github.com/PhoenixZeng/LuraphDeobfuscator) states that it was tested on Luraph v11.5–v11.8.1 and describes generating `.luac` followed by decompilation with `unluac`. That is a separate tool with its own stated capabilities; those claims do not carry over to NARSIL. No code from that repository is included in this project.
 
 This project focuses on an observed VM format, reproducible intermediate results, and validation of recovered behavior. Going through standard Lua bytecode is useful only when the semantics of the VM under investigation actually allow that representation.

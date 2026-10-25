@@ -18,8 +18,8 @@ From the repository root:
 
 ```sh
 python -m unittest discover -s tests -v
-python -m luraph_lab demo --out work/validation-demo
-python -m luraph_lab capture-plan examples/toy_loader.lua --profile examples/capture_profile.example.json --out work/validation-capture
+python -m narsil demo --out work/validation-demo
+python -m narsil capture-plan examples/toy_loader.lua --profile examples/capture_profile.example.json --out work/validation-capture
 ```
 
 Choose new output directories when running these commands again. The commands do not execute the input Lua.
@@ -35,7 +35,7 @@ runChecks()
 
 Here, `pathToChecksModule` refers to the ModuleScript you created. The Python CLI neither installs nor runs it. In another Luau host, use that host's module loading mechanism.
 
-The separate [examples/serializer_checks.luau](../examples/serializer_checks.luau) returns a function that accepts the function from `luraph_lab/resources/graph_serializer.luau`. This lets you repeat the native export checks without running a third-party loader.
+The separate [examples/serializer_checks.luau](../examples/serializer_checks.luau) returns a function that accepts the function from `narsil/resources/graph_serializer.luau`. This lets you repeat the native export checks without running a third-party loader.
 
 ```lua
 local runSerializerChecks = require(pathToSerializerChecksModule)

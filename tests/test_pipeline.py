@@ -6,8 +6,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from luraph_lab.adapters.column_vm_v1 import Capture
-from luraph_lab.pipeline import run
+from narsil.adapters.column_vm_v1 import Capture
+from narsil.pipeline import run
 
 
 def proto(instructions, upvalues=None):
@@ -146,7 +146,7 @@ class PipelineTests(unittest.TestCase):
             Capture({"root": {"nil": 1}, "nodes": []})
 
     def test_imports_have_no_filesystem_side_effects(self):
-        for name in ("luraph_lab.engine.lift", "luraph_lab.engine.render", "luraph_lab.pipeline"):
+        for name in ("narsil.engine.lift", "narsil.engine.render", "narsil.pipeline"):
             with patch.object(Path, "read_text", side_effect=AssertionError("import read")), \
                  patch.object(Path, "write_text", side_effect=AssertionError("import write")):
                 importlib.reload(importlib.import_module(name))

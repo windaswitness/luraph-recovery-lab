@@ -174,7 +174,7 @@ def plan_capture(input_path, profile_path, output_dir) -> dict:
         raise CapturePlanError("include_graph_serializer must be boolean")
     files = {"capture.luau": guarded.encode("utf-8")}
     if include_serializer:
-        files["serialize_graph.luau"] = resources.files("luraph_lab").joinpath("resources", "graph_serializer.luau").read_bytes()
+        files["serialize_graph.luau"] = resources.files("narsil").joinpath("resources", "graph_serializer.luau").read_bytes()
     result = {
         "schema_version": 1, "operation": "capture-plan", "profile_name": name,
         "input_sha256": digest, "profile_sha256": hashlib.sha256(profile_bytes).hexdigest(),

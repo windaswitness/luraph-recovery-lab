@@ -37,8 +37,8 @@ def _input_file(path: Path) -> Path:
 
 def parser() -> argparse.ArgumentParser:
     root = argparse.ArgumentParser(
-        prog="luraph-lab",
-        description="Experimental Lua VM recovery lab. Input Lua is never executed by this CLI.",
+        prog="narsil",
+        description="NARSIL: experimental Luraph recovery tools for Lua/Luau. Input Lua is never executed by this CLI.",
     )
     root.add_argument("--version", action="version", version=__version__)
     root.add_argument("--debug", action="store_true", help="Show Python tracebacks for failures")
@@ -82,7 +82,7 @@ def dispatch(args: argparse.Namespace) -> dict | list:
     if args.command == "demo":
         from .pipeline import run
         output = _output_directory(args.out)
-        fixture = resources.files("luraph_lab").joinpath("resources/synthetic_capture.json")
+        fixture = resources.files("narsil").joinpath("resources/synthetic_capture.json")
         with resources.as_file(fixture) as path:
             result = run(path, output, profile="column-vm-v1")
         result["demo"] = "Authored synthetic VM data; no proprietary game source is bundled."
