@@ -1,6 +1,6 @@
-# Luraph Recovery Lab
+# NARSIL
 
-**An experimental Lua VM recovery toolkit, with a reproducible demo and a guide to the method.**
+**An experimental Luraph deobfuscator and Lua/Luau VM recovery toolkit. Recover the logic. Reforge the code. и темы luraph, luraph-deobfuscator, luraph-deobf, deobfuscation, deobfuscator, lua, luau, reverse-engineering, devirtualization**
 
 A toolkit for analyzing virtualized Lua/Luau: static inspection, planning the
 capture of unpacked VM data, and recovering Luau from a compatible dump.
