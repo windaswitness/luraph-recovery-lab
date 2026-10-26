@@ -12,11 +12,24 @@ from . import __version__
 
 PROFILE_METADATA = [{
     "id": "column-vm-v1",
+    "kind": "recovery",
     "status": "experimental",
     "input": "captured table graph; not an obfuscated source file",
     "scope": "one observed column-based VM layout and opcode mapping",
     "versionGuarantee": False,
     "output": "reconstructed Luau requiring behavioral validation",
+}, {
+    "id": "unpack-profile-v1",
+    "kind": "unpacking",
+    "input": "extracted payload bytes plus exact-hash JSON transform profile",
+    "output": "decoded bytes and per-layer hashes; no instruction lifting",
+    "versionGuarantee": False,
+}, {
+    "id": "luau-v6-types3",
+    "kind": "inventory",
+    "input": "raw Luau bytecode with version 6 and type version 3",
+    "output": "structural inventory; no opcode semantics or source reconstruction",
+    "versionGuarantee": False,
 }]
 
 
@@ -55,11 +68,21 @@ def parser() -> argparse.ArgumentParser:
 
     recover = commands.add_parser("recover", help="Reconstruct Luau from a compatible captured graph")
     recover.add_argument("input", type=Path, help="Capture JSON, not a Lua source file")
-    recover.add_argument("--profile", default="column-vm-v1", choices=[p["id"] for p in PROFILE_METADATA])
+    recover.add_argument("--profile", default="column-vm-v1",
+                         choices=[p["id"] for p in PROFILE_METADATA if p["kind"] == "recovery"])
     recover.add_argument("--out", type=Path, required=True)
 
     demo = commands.add_parser("demo", help="Run recovery on the included authored synthetic capture")
     demo.add_argument("--out", type=Path, required=True)
+    offline = commands.add_parser("demo-offline", help="Unpack nested synthetic data, then run recovery")
+    offline.add_argument("--out", type=Path, required=True)
+    unpack = commands.add_parser("unpack", help="Decode extracted payload bytes with an exact-hash profile")
+    unpack.add_argument("input", type=Path, help="Extracted bytes, not an obfuscated Lua source file")
+    unpack.add_argument("--profile", type=Path, required=True)
+    unpack.add_argument("--out", type=Path, required=True)
+    bytecode = commands.add_parser("bytecode-info", help="Inventory Luau v6/types3 bytecode; no decompilation")
+    bytecode.add_argument("input", type=Path)
+    bytecode.add_argument("--out", type=Path, required=True)
     commands.add_parser("profiles", help="List adapter scope and limitations")
     return root
 
@@ -67,6 +90,16 @@ def parser() -> argparse.ArgumentParser:
 def dispatch(args: argparse.Namespace) -> dict | list:
     if args.command == "profiles":
         return PROFILE_METADATA
+    if args.command == "unpack":
+        from .unpack import run
+        source, profile = _input_file(args.input), _input_file(args.profile)
+        return run(source, profile, _output_directory(args.out))
+    if args.command == "bytecode-info":
+        from .bytecode import run
+        return run(_input_file(args.input), _output_directory(args.out))
+    if args.command == "demo-offline":
+        from .offline_demo import run
+        return run(_output_directory(args.out))
     if args.command == "inspect":
         from .inspection import inspect_file
         source = _input_file(args.input)

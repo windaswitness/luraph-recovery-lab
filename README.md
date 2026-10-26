@@ -10,6 +10,12 @@ a compatible dump. It includes a reproducible devirtualization demo and a
 detailed guide to the method.
 Requires Python 3.10+ and has no third-party runtime dependencies.
 
+**New in 0.3.0:** offline unpacking of nested payloads, structural inspection of
+Luau v6/type-v3 bytecode, and a reproducible packed-data-to-Luau demo.
+See [the offline VM recovery method](docs/OFFLINE_VM_RECOVERY.md) and
+[release notes](CHANGELOG.md). These additions do not identify every obfuscator
+or automatically decompile an arbitrary custom VM.
+
 Previously published as **Luraph Recovery Lab**, this project grew out of
 hands-on script recovery. It includes reusable tools and original educational
 examples. Game source code, game assets, and private
@@ -27,6 +33,7 @@ From the root of the downloaded repository:
 ```sh
 python -m narsil profiles
 python -m narsil demo --out work/demo
+python -m narsil demo-offline --out work/offline-demo
 python -m unittest discover -s tests -v
 ```
 
@@ -76,6 +83,10 @@ before it can be used with another script.
 
 ### Recover code from a compatible dump
 
+For nested payloads, first read [Offline VM Recovery](docs/OFFLINE_VM_RECOVERY.md).
+The unpacking and native-bytecode inventory commands have different input/output
+contracts from the recovery command below.
+
 ```sh
 python -m narsil recover private/capture.json --profile column-vm-v1 --out work/recovered
 ```
@@ -96,6 +107,10 @@ guarantees. None of these steps alone proves full program equivalence.
 flowchart LR
     A[Obfuscated Lua] --> B[Static inspection]
     B --> C[Profile and loader interception]
+    B --> U[Offline unpack profile]
+    U --> V[Decoded custom VM or native bytecode]
+    V --> W[Format-specific adapter still required]
+    W --> E
     C --> D[VM table graph]
     D --> E[Instruction semantics and self-modification]
     E --> F[Control-flow graph]
@@ -111,6 +126,7 @@ The VM representation can then be translated into ordinary language constructs.
 Details and examples:
 
 - [The method: from loader to readable Luau](docs/METHOD.md).
+- [Offline unpacking, buffer VMs, and nested Luau bytecode](docs/OFFLINE_VM_RECOVERY.md).
 - [Dump format and adapter development](docs/ADAPTERS.md).
 - [What to validate and what tests do not prove](docs/VALIDATION.md).
 - [Preparing and publishing the repository on GitHub](docs/PUBLISHING.md).

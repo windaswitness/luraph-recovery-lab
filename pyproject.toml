@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "narsil"
-version = "0.2.0"
-description = "NARSIL: experimental Luraph recovery tools for Lua/Luau VM inspection, capture planning, and reconstruction"
+version = "0.3.0"
+description = "NARSIL: experimental Luraph and Lua/Luau VM recovery, offline unpacking, and bytecode inspection"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}

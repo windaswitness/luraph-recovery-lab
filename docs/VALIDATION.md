@@ -14,6 +14,16 @@ Each stage answers a different question. An animation asset error does not prove
 
 ## Reproducible Toolkit Checks
 
+Version 0.3.0 adds offline transform and bytecode-inventory checks.
+Run the following in addition to the existing commands:
+
+~~~sh
+python -m narsil demo-offline --out work/validation-offline
+~~~
+
+This exercises the nested envelope and existing graph recovery together.
+The native-bytecode reader checks structure; it does not execute code words.
+
 From the repository root:
 
 ```sh

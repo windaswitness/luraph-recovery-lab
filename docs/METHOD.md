@@ -6,6 +6,10 @@ This document describes the full investigation process. The project's commands a
 
 ## Why Decoding Strings Is Not Enough
 
+For loaders whose byte transforms can be reproduced without execution, see the
+[offline workflow](OFFLINE_VM_RECOVERY.md). It covers custom buffer VMs, nested
+native-bytecode layers, and the new unpacking tools.
+
 Simple string obfuscation may hide program text in numbers, escape sequences, or a compressed block. Unpacking it sometimes produces ordinary Lua code. This is **literal unpacking**.
 
 With virtualization, the data contains a different program: a sequence of instructions for a custom virtual machine. An interpreter for those instructions sits alongside it. A decoded string might be nothing more than a field name or a single constant. Recovering behavior requires understanding the instructions, branches, and functions. This is **devirtualization**.

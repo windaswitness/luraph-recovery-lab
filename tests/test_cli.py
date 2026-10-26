@@ -76,6 +76,34 @@ class CommandLineTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("error:", result.stderr)
 
+    def test_nested_offline_demo_and_replay(self):
+        with tempfile.TemporaryDirectory() as temp:
+            base = Path(temp)
+            result = self.invoke("demo-offline", "--out", base / "demo")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertFalse(json.loads(result.stdout)["executed_input"])
+            self.assertTrue((base / "demo/recovered/reconstructed.luau").is_file())
+            replay = self.invoke("unpack", base / "demo/packed.bin", "--profile",
+                                 base / "demo/unpack-profile.json", "--out", base / "replay")
+            self.assertEqual(replay.returncode, 0, replay.stderr)
+            self.assertEqual((base / "replay/payload.bin").read_bytes(),
+                             (base / "demo/unpacked/payload.bin").read_bytes())
+
+    def test_bytecode_inventory_command(self):
+        from test_bytecode import chunk
+        with tempfile.TemporaryDirectory() as temp:
+            base = Path(temp)
+            source = base / "input.bin"
+            source.write_bytes(chunk())
+            result = self.invoke("bytecode-info", source, "--out", base / "out")
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(json.loads(result.stdout)["status"], "structural-inventory")
+            self.assertTrue((base / "out/bytecode.json").is_file())
+            source.write_bytes(b"not bytecode")
+            result = self.invoke("bytecode-info", source, "--out", base / "bad")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse((base / "bad/bytecode.json").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

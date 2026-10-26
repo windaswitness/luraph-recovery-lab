@@ -1,6 +1,10 @@
 # Adapters, Capture, and Data Formats
 
-NARSIL has two different kinds of profiles. A **capture profile** is a JSON file containing reviewed changes for one specific loader. A **recovery profile** is a Python adapter that understands a VM's data layout and opcode semantics. A match for one profile does not establish compatibility with the other.
+NARSIL has three kinds of profiles. A **capture profile** contains reviewed source changes for one loader. An **unpack profile** describes byte transforms tied to exact input/output hashes. A **recovery profile** understands a VM's data layout and opcode semantics. Matching one does not establish compatibility with another.
+
+For unpack profiles and the separate native Luau inventory command, see
+[Offline VM Recovery](OFFLINE_VM_RECOVERY.md). Neither supplies the semantic
+lifter needed for an arbitrary new VM.
 
 Run all commands below from the repository root with Python 3.10+. The `--out` directory must be new or empty. These commands do not execute Lua or connect to Studio.
 

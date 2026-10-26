@@ -5,7 +5,7 @@ import argparse
 from pathlib import Path
 import zipfile
 
-ROOT_FILES = ("README.md", "CONTRIBUTING.md", "LICENSE", "pyproject.toml",
+ROOT_FILES = ("README.md", "CHANGELOG.md", "CONTRIBUTING.md", "LICENSE", "pyproject.toml",
               "MANIFEST.in", ".gitignore", ".gitattributes")
 SOURCE_DIRECTORIES = ("narsil", "tests", "examples", "docs", "tools", ".github")
 EXCLUDE = {"__pycache__", ".git", ".test-tmp", ".pytest_cache", "private", "captures", "work"}
